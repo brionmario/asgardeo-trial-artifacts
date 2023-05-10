@@ -47,15 +47,9 @@
             if (promptID) {
                 var promptIDInput = document.createElement('input');
                 promptIDInput.type = 'hidden';
-                promptIDInput.name = 'promptId';
+                promptIDInput.name = 'sessionDataKey';
                 promptIDInput.value = promptID;
                 form.appendChild(promptIDInput);
-                // add an input sessionDataKey to the form
-                var sessionDataKeyInput = document.createElement('input');
-                sessionDataKeyInput.type = 'hidden';
-                sessionDataKeyInput.name = 'sessionDataKey';
-                sessionDataKeyInput.value = promptID;
-                form.appendChild(sessionDataKeyInput);
             }
 
             // Display the spinner
