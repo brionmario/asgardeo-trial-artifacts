@@ -11,7 +11,7 @@
             border-radius: 50%;
             width: 120px;
             height: 120px;
-            animation: spin 2s linear infinite;
+            animation: spin 1s linear infinite;
             margin: 0 auto;
             margin-top: 50px;
         }
@@ -23,21 +23,28 @@
     </style>
     <script>
         window.onload = function() {
-            // Add event listener to the form submission
+            // Read the promptID query parameter from the window location
+            var urlParams = new URLSearchParams(window.location.search);
+            var promptID = urlParams.get('promptID');
+            
+            // Add the promptID value as a hidden input field in the form
             var form = document.getElementById('myForm');
-            form.addEventListener('submit', function(event) {
-                // Prevent the default form submission
-                event.preventDefault();
-                
-                // Show the spinner
-                document.getElementById('spinner').style.display = 'block';
-                
-                // Wait for 5 seconds
-                setTimeout(function() {
-                    // Submit the form
-                    form.submit();
-                }, 5000);
-            });
+            if (promptID) {
+                var promptIDInput = document.createElement('input');
+                promptIDInput.type = 'hidden';
+                promptIDInput.name = 'promptID';
+                promptIDInput.value = promptID;
+                form.appendChild(promptIDInput);
+            }
+            
+            // Show the spinner
+            document.getElementById('spinner').style.display = 'block';
+            
+            // Wait for 1 second
+            setTimeout(function() {
+                // Submit the form
+                form.submit();
+            }, 1000);
         };
     </script>
 </head>
@@ -46,13 +53,7 @@
     <div id="spinner" class="spinner" style="display: none;"></div>
 
     <form id="myForm" action="https://api.asg.io/t/aysh/commonauth" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" ><br><br>
-
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" ></textarea><br><br>
-
-        <input type="submit" value="Submit">
+        <!-- <input type="hidden" name="promptID" id="promptID" value=""> -->
     </form>
 </body>
 </html>
