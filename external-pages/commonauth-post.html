@@ -3,18 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Form Submission</title>
+    <style>
+        /* CSS for the spinner */
+        .spinner {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // Add event listener to the form submission
+            var form = document.getElementById('myForm');
+            form.addEventListener('submit', function(event) {
+                // Prevent the default form submission
+                event.preventDefault();
+                
+                // Show the spinner
+                document.getElementById('spinner').style.display = 'block';
+                
+                // Wait for 5 seconds
+                setTimeout(function() {
+                    // Submit the form
+                    form.submit();
+                }, 5000);
+            });
+        };
+    </script>
 </head>
 <body>
-    <form action="http://api.asg.io/t/aysh/commonauth" method="post">
+    <!-- Spinner -->
+    <div id="spinner" class="spinner" style="display: none;"></div>
+
+    <form id="myForm" action="https://api.asg.io/t/aysh/commonauth" method="post">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" ><br><br>
 
-        
         <label for="message">Message:</label>
         <textarea id="message" name="message" ></textarea><br><br>
-        
+
         <input type="submit" value="Submit">
     </form>
 </body>
 </html>
-
