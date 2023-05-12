@@ -20,7 +20,13 @@ var onLoginRequest = function(context) {
                     //Log.info(fname);
                     Log.info("Successfully redirected to external page");
                     Log.info(customClaim);
-
+                   
+                    var origin = context.request.headers["origin"];
+                    Log.info("Request came from the Origin: " + origin);
+                    if (!origin.startsWith("https://ayshsandu.github.io") ){
+                        var parameterMap = {'errorCode': 'access_denied', 'errorMessage': 'Invalid host found.'};
+                        fail(parameterMap);
+                    }
                     executeStep(2);
                 },
                 onFail: function(context, data) {
