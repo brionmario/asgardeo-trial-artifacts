@@ -3,12 +3,8 @@ var onLoginRequest = function(context) {
         onSuccess: function(context) {
             var username = context.steps[1].subject.username;
             Log.info("========== Promt call is about to execute");
-            prompt("externalPage", {
-                "redirectURL": "https://ayshsandu.github.io/asgardeo-trial-artifacts/external-pages/commonauth-post.html",
-                "properties": {
-                    "username": username,
-                    "fName": "First Name"
-                }
+            prompt("redirectToExternal", {
+                "redirectURL": "https://ayshsandu.github.io/asgardeo-trial-artifacts/external-pages/commonauth-post.html"
             }, {
                 onSuccess: function(context) {
                    	var customClaim = "";

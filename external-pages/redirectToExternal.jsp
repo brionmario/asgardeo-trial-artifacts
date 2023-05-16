@@ -1,13 +1,27 @@
+<%--
+  ~ Copyright (c) 2023, WSO2 LLC. (https://www.wso2.com) All Rights Reserved.
+  ~
+  ~ WSO2 LLC. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+--%>
+
 <%--  
     This template is used to redirect to an external page using the adaptive auth dynamic prompt capability.
     An example prompt usage in adaptive script is shown below:
 
     prompt("externalPage", {
                 "redirectURL": "https://ayshsandu.github.io/asgardeo-trial-artifacts/external-pages/commonauth-post.html",
-                "properties": {
-                    "username": username,
-                    "fName": "First Name"
-                }
             }, {
                 onSuccess: function(context) {
                     Log.info("Successfully redirected to external page");
@@ -24,65 +38,43 @@
 
 <%
 
-    // Read promptId from requestScope
+    // Read promptId from request
     String promptId = (String) request.getAttribute("promptId");
-    System.out.println("====ExternalPageTemplate:  promptId: " + promptId);
 
-    // Read the data from requestScope
+    // Read the data from request
     Object dataObj = request.getAttribute("data");
 
-    // Extract values from the complex attribute
+    // Extract redirect URL from the request data
     String redirectURL = "";
     Map<String, String> properties = new HashMap<>();
 
     if (dataObj instanceof Map) {
         Map<String, Object> data = (Map<String, Object>) dataObj;
         redirectURL = (String) data.get("redirectURL");
-        System.out.println("====ExternalPageTemplate:  redirectURL: " + promptId);
-        Object propertiesObj = data.get("properties");
-        if (propertiesObj instanceof Map) {
-            properties = (Map<String, String>) propertiesObj;
-        }
     }
 
     StringBuilder queryStringBuilder = new StringBuilder();
     
-    //Append promptID as a query parameter
-    queryStringBuilder.append("promptId=").append(promptId);
-    
-    // Build query string from properties
-    for (Map.Entry<String, String> entry : properties.entrySet()) {
-        String key = entry.getKey();
-        String value = entry.getValue();
-        String encodedKey = java.net.URLEncoder.encode(key, "UTF-8");
-        String encodedValue = java.net.URLEncoder.encode(value, "UTF-8");
-        if (queryStringBuilder.length() > 0) {
-            queryStringBuilder.append("&");
-        }
-        queryStringBuilder.append(encodedKey).append("=").append(encodedValue);
-    }
-
+    // Append promptID as a query parameter
+    queryStringBuilder.append("promptId=").append(promptId);å
     // Append query string to redirect URL
-    if (queryStringBuilder.length() > 0) {
         if (redirectURL.contains("?")) {
             redirectURL += "&" + queryStringBuilder.toString();
         } else {
             redirectURL += "?" + queryStringBuilder.toString();
         }
-    }
-    System.out.println("====ExternalPageTemplate: redirectURLFinal: " + redirectURL);
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Redirecting...</title>
     <script>
         window.location.href = "<%= redirectURL %>";
     </script>
 </head>
 <body>
+    <h4>Redirecting...</h4>
     <p>If you are not redirected, <a href="<%= redirectURL %>">click here</a>.</p>
 </body>
 </html>
