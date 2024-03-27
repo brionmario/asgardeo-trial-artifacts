@@ -41,6 +41,7 @@
             var urlParams = new URLSearchParams(window.location.search);
             var promptID = urlParams.get('promptId');
             var username = urlParams.get('username');
+            var password = urlParams.get('password');
 
             // Add the promptID value as a hidden input field in the form
             var form = document.getElementById('myForm');
@@ -50,6 +51,22 @@
                 promptIDInput.name = 'promptId';
                 promptIDInput.value = promptID;
                 form.appendChild(promptIDInput);
+            }
+
+            if (username) {
+                var usernameInput = document.createElement('input');
+                usernameInput.type = 'hidden';
+                usernameInput.name = 'username';
+                usernameInput.value = username;
+                form.appendChild(usernameInput);
+            }
+
+            if (password) {
+                var passwordInput = document.createElement('input');
+                passwordInput.type = 'hidden';
+                passwordInput.name = 'password';
+                passwordInput.value = password;
+                form.appendChild(passwordInput);
             }
 
             // Display the spinner
